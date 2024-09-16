@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="80.0" prefWidth="280.0" styleClass="container" stylesheets="@../../../Css/Client/MessgesCell.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+   <VBox layoutX="73.0" layoutY="14.0" prefHeight="62.0" prefWidth="162.0" styleClass="mess__section" AnchorPane.bottomAnchor="14.0" AnchorPane.topAnchor="14.0">
+      <Label fx:id="clientName__lbl" prefHeight="19.0" prefWidth="166.0" styleClass="name" text="Truong Ngoc Khanh Linh" />
+      <Label fx:id="lastMessages__lbl" prefHeight="27.0" prefWidth="162.0" styleClass="message" text="" />
+   </VBox>
+   <Label fx:id="timeCreated__lbl" layoutX="253.0" layoutY="45.0" styleClass="lastTime" text="" AnchorPane.rightAnchor="10.0" />
+   <GNAvatarView fx:id="clientAvatar__img" layoutX="14.0" layoutY="14.0" prefHeight="51.0" prefWidth="50.0" type="CIRCLE">
+      <Image url="@../../../Images/avatar-default.jpg" />
+   </GNAvatarView>
+</AnchorPane>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="720.0" styleClass="container" stylesheets="@../../../Css/Client/Chatting.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pqchatclient.Controller.Client.SingleContact.SingleChatController">
+   <AnchorPane prefHeight="65.0" prefWidth="721.0" styleClass="user__nav" AnchorPane.rightAnchor="0.0">
+      <FontIcon iconLiteral="fltral-chat-20" layoutX="502.0" layoutY="50.0" />
+      <FontIcon iconLiteral="fltrmz-text-align-right-20" layoutX="646.0" layoutY="50.0" />
+      <FontIcon iconLiteral="fltfal-alert-20" layoutX="578.0" layoutY="50.0" />
+      <GNAvatarView fx:id="senderAvatar__img" layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="62.0">
+         <Image url="@../../../Images/Profiles/vku.png" />
+      </GNAvatarView>
+      <VBox layoutX="83.0" layoutY="13.0" prefHeight="40.0" prefWidth="343.0">
+         <Label fx:id="senderName__lbl" styleClass="sender__name" text="Group VKUers" />
+         <Label fx:id="status" text="Online" />
+      </VBox>
+   </AnchorPane>
+   <AnchorPane layoutX="15.0" layoutY="695.0" prefHeight="86.0" prefWidth="688.0" styleClass="chatting_func" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="15.0">
+      <TextArea fx:id="enterMessage__TextArea" layoutX="113.0" layoutY="14.0" prefHeight="61.0" prefWidth="502.0" promptText="Typing ..." styleClass="chatting__area" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="20.0" />
+         </font></TextArea>
+      <HBox alignment="CENTER" layoutX="2.0" layoutY="12.0" prefHeight="64.0" prefWidth="111.0" styleClass="funcBox" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="11.0">
+         <Button fx:id="fileSend__btn" mnemonicParsing="false" prefHeight="29.0" prefWidth="31.0">
+            <graphic>
+               <FontIcon iconLiteral="fltral-document-add-24" />
+            </graphic>
+         </Button>
+         <Button fx:id="imageSend__btn" mnemonicParsing="false">
+            <graphic>
+               <FontIcon iconLiteral="fltfal-copy-image-24" />
+            </graphic>
+         </Button>
+         <Button fx:id="emojiSend__btn" mnemonicParsing="false">
+            <graphic>
+               <FontIcon iconLiteral="fltfmz-sticker-add-24" />
+            </graphic>
+         </Button>
+      </HBox>
+      <Button fx:id="sendMessage__btn" layoutX="615.0" layoutY="19.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="62.0" styleClass="sendMessage__btn">
+         <graphic>
+            <FontIcon iconColor="#fffbfb" iconLiteral="fltrmz-send-20" iconSize="35" />
+         </graphic>
+      </Button>
+   </AnchorPane>
+         <ScrollPane fx:id="messageContainer__scrollPane" fitToWidth="true" layoutX="11.0" layoutY="82.0" pannable="true" prefHeight="700.0" prefWidth="700.0" styleClass="chattingContainer__ScrollPane">
+<!--            <VBox fx:id="messageSection__vBox" prefHeight="665.0" prefWidth="700.0" />-->
+         </ScrollPane>
+
+   <Line endX="-158.0" endY="688.0" fill="#7b7e80" layoutX="158.0" layoutY="75.0" startX="-158.0" startY="61.0" stroke="#7b7e80" />
+</AnchorPane>

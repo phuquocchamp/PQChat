@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane prefHeight="900.0" prefWidth="50.0" styleClass="container" stylesheets="@../../Css/Client/ClientMenu.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pqchatclient.Controller.Client.ClientMenuController">
+   <VBox alignment="CENTER" layoutY="195.0" prefHeight="426.0" prefWidth="50.0" styleClass="menu__section" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Button fx:id="singleChat__btn" mnemonicParsing="false" prefHeight="34.0" prefWidth="43.0">
+         <graphic>
+            <FontIcon iconColor="WHITE" iconLiteral="fltfmz-person-20" iconSize="35" wrappingWidth="30.921173572540283" />
+         </graphic>
+      </Button>
+      <Button fx:id="groupChat__btn" mnemonicParsing="false">
+         <graphic>
+            <FontIcon iconColor="WHITE" iconLiteral="fltfmz-people-community-20" iconSize="35" wrappingWidth="30.921173572540283" />
+         </graphic>
+      </Button>
+      <Button fx:id="chatBot_btn" mnemonicParsing="false">
+         <graphic>
+            <FontIcon iconLiteral="fltfal-chat-bubbles-question-24" iconSize="35" />
+         </graphic>
+      </Button>
+      <Button fx:id="setting__btn" mnemonicParsing="false">
+         <graphic>
+            <FontIcon iconColor="WHITE" iconLiteral="fltfmz-settings-20" iconSize="35" wrappingWidth="30.921173572540283" />
+         </graphic>
+      </Button>
+   </VBox>
+   <Button fx:id="exit__btn" layoutX="3.0" layoutY="835.0" mnemonicParsing="false">
+      <graphic>
+         <FontIcon iconColor="WHITE" iconLiteral="fltfmz-sign-out-20" iconSize="35" />
+      </graphic>
+   </Button>
+   <Button layoutX="3.0" layoutY="14.0" mnemonicParsing="false">
+      <graphic>
+         <FontIcon iconLiteral="fltral-comment-add-20" />
+      </graphic>
+   </Button>
+</AnchorPane>

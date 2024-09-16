@@ -1,0 +1,19 @@
+.container {
+}
+
+.heading__quote {
+    -fx-font-family: 'Mexon';
+    -fx-font-size: 35px;
+}
+
+.description{
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+    -fx-text-fill: #1E282C;
+}
+
+.nocopyright{
+    -fx-font-size: 15px;
+    -fx-text-fill: #325D47;
+    -fx-font-weight: bold;
+}

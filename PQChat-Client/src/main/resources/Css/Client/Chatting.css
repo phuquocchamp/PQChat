@@ -1,0 +1,157 @@
+.container {
+    /*-fx-background-color: rgba(22, 27, 28, 0.87);*/
+    -fx-background-color: #161B1C;
+    /*-fx-border-color: #7b7e80;*/
+    /*-fx-border-width: 0 0 0 2 ;*/
+
+}
+
+
+/*Header*/
+
+.user__nav{
+    /*-fx-border-color: #5A6465;*/
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-radius: 0 0 15px 0;
+
+    -fx-background-color:#1B292A;
+    /*-fx-background-radius: 0 0 15px 0;*/
+
+}
+
+.sender__name {
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+
+.user__nav > FontIcon {
+    -fx-icon-size: 25px;
+    -fx-text-alignment: center;
+    -fx-icon-color: white;
+}
+
+/*Chatting */
+.chattingContainer__ScrollPane {
+    -fx-background-color: transparent;
+}
+.chattingContainer__ScrollPane .viewport{
+    /*-fx-background-color: rgba(119, 134, 120, 0.44);*/
+    -fx-background-color: transparent;
+
+    -fx-background-radius: 15px ;
+    -fx-border-radius: 15px;
+}
+.chattingContainer__ScrollPane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    /*-fx-padding: 0;*/
+    -fx-opacity: 0;
+}
+.chattingContainer__ScrollPane .content {
+    -fx-background-color: #5A6465;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px ;
+
+}
+
+
+
+/*.scroll-pane .scroll-bar:vertical {*/
+/*    -fx-background-color: transparent;*/
+/*}*/
+
+/*.scroll-pane .scroll-bar:horizontal {*/
+/*    -fx-background-color: transparent;*/
+/*}*/
+
+
+/*Footer*/
+
+.chatting_func{
+    -fx-border-color: #5A6465;
+    -fx-border-radius: 15px;
+
+    -fx-background-color: #1B292A;
+    -fx-background-radius:  15px;
+    -fx-alignment: centrer;
+    -fx-text-alignment: center;
+
+}
+
+.chatting__area {
+    /*-fx-text-alignment: center;*/
+    -fx-fill: #CCFFFF;
+    -fx-background-color: #5A6465;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-font-size: 15px;
+}
+
+.chatting__area .viewport {
+    -fx-background-color: transparent;
+}
+
+.chatting__area .content {
+    -fx-background-color: #F4F4F4;
+    -fx-background-radius: 10px;
+}
+
+.funcBox {
+
+}
+.funcBox Button {
+    -fx-background-color: transparent;
+}
+
+.funcBox FontIcon {
+    -fx-icon-size: 19px;
+    -fx-text-alignment: center;
+    -fx-icon-color: white;
+
+}
+
+.funcBox FontIcon:hover {
+
+    -fx-icon-color: #99CC99;
+    -fx-cursor: hand;
+
+}
+
+.sendMessage__btn{
+    -fx-background-color: transparent;
+}
+
+/*Right Pane*/
+.detail__container {
+    -fx-background-color:#1B292A;
+    -fx-border-width: 0 0 0 1px;
+
+    -fx-border-color: #5A6465;
+    /*-fx-background-color: rgba(50, 93, 71, 0.94);*/
+    /*-fx-background-radius: 15px 0 0 15px;*/
+    -fx-text-alignment: center;
+}
+
+
+.detail__container Avatar {
+
+}
+
+.detail__name {
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+.detai__info{
+    -fx-alignment: center;
+    -fx-spacing: 30px;
+}
+
+.detai__info FontIcon {
+    -fx-icon-size: 25px;
+    -fx-icon-color: white;
+}
+
+
+

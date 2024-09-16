@@ -1,0 +1,26 @@
+
+.container {
+    /*-fx-background-color:  #161B1C;*/
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-spacing: 5px;
+}
+.container:hover {
+    -fx-background-color: #677a7c;
+    -fx-cursor: hand;
+}
+
+.name {
+    -fx-font-family: "DejaVu Sans Mono";
+    -fx-font-size: 11px;
+    -fx-text-fill: #99CC66;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.addButton {
+    -fx-background-color: transparent;
+    /*-fx-background-radius: 50%;*/
+}
+
+

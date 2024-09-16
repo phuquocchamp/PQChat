@@ -1,0 +1,34 @@
+.container {
+    -fx-background-color: #161B1C ;
+    -fx-fill: white;
+}
+.logo {
+    -fx-font-family: Mexon;
+    -fx-fill: white;
+    -fx-text-alignment: centrer;
+    -fx-font-size: 35px;
+}
+
+.menu__section{
+    -fx-text-alignment: center;
+    -fx-spacing: 40px;
+
+}
+
+Button {
+    -fx-background-color: transparent;
+}
+
+FontIcon {
+    -fx-text-alignment: center;
+    -fx-icon-size: 25px;
+    -fx-icon-color: white;
+}
+FontIcon:hover {
+    -fx-cursor: hand;
+    -fx-icon-color: #48A5C3;
+
+}
+
+
+

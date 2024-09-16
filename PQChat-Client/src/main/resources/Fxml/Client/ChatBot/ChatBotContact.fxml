@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane prefHeight="900.0" prefWidth="300.0" styleClass="container" stylesheets="@../../../Css/Client/Contacts.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pqchatclient.Controller.Client.ChatBot.ChatBotContactController">
+   <AnchorPane layoutY="-4.0" prefHeight="65.0" prefWidth="351.0" styleClass="user__profile" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <FontIcon fx:id="collapse_btn" iconColor="WHITE" iconLiteral="fltfmz-more-vertical-20" iconSize="25" layoutX="301.0" layoutY="45.0" styleClass="collapse__menu" AnchorPane.topAnchor="20.0" />
+      <Text layoutX="32.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="heading" text="PQBot">
+         <font>
+            <Font name="FluentSystemIcons-Filled" size="13.0" />
+         </font></Text>
+   </AnchorPane>
+   <Label layoutX="85.0" layoutY="405.0" styleClass="user__heading" text="phuquocchamp bot" AnchorPane.topAnchor="405.0">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <ImageView fitHeight="301.0" fitWidth="321.0" layoutX="13.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../../../Images/Innovation-amico.png" />
+      </image>
+   </ImageView>
+   <TextFlow layoutX="31.0" layoutY="461.0" prefHeight="396.0" prefWidth="264.0" textAlignment="CENTER">
+      <children>
+         <Text fill="#1e4f23" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="chat__heading" text="Introducing PQBot, your intelligent virtual assistant designed to streamline and automate your messaging experience. PQBot operates as a sophisticated chatbot, harnessing advanced natural language processing capabilities to seamlessly respond to your messages." textAlignment="CENTER" wrappingWidth="265.8240051269531">
+            <font>
+               <Font size="21.0" />
+            </font>
+         </Text>
+      </children>
+   </TextFlow>
+</AnchorPane>

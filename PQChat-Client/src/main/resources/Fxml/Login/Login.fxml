@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:id="login__parent"
+        fx:controller="com.example.pqchatclient.Controller.LoginController">
+    <center>
+        <fx:include source="LoginDecoration.fxml"/>
+    </center>
+    <right>
+        <fx:include source="SignIn.fxml"/>
+    </right>
+</BorderPane>

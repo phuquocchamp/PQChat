@@ -1,0 +1,96 @@
+.container {
+    -fx-background-color: #161B1C;
+    /*-fx-background-color: #1d1e1f;*/
+
+}
+
+/*Profile User*/
+.heading {
+    -fx-font-family: "JetBrains Mono";
+    -fx-font-size: 30px;
+    -fx-fill: white;
+}
+
+.user__profile {
+    -fx-background-color: rgba(30, 50, 51, 0.61);
+
+    -fx-background-radius: 0 0 0px 15px;
+    -fx-spacing: 25px;
+    -fx-text-alignment: center;
+}
+
+
+
+.account{
+    /*-fx-font-family: "DejaVu Sans Mono";*/
+    -fx-font-size: 18px;
+}
+
+.account__user{
+    -fx-text-fill: #CCCCCC;
+
+}
+.account__type{
+    -fx-font-size: 14px;
+    -fx-text-fill: #98ca65;
+}
+
+
+.collapse__menu{
+    -fx-icon-color: white;
+    -fx-font-size: 25px;
+}
+
+/*Online Users*/
+.user__heading{
+    -fx-font-size: 40px;
+    -fx-text-fill: #99CC99;
+}
+
+
+.user__online{
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+}
+
+/*.user__online .list-cell:selected {*/
+/*    -fx-background-color: #677a7c;*/
+/*}*/
+
+/*Friend Chat*/
+.chat__heading{
+    -fx-font-size: 20px;
+    -fx-fill: white;
+
+}
+.user__chat{
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+}
+.user__chat .list-cell {
+    -fx-spacing: 10px 0;
+    -fx-text-alignment: center;
+}
+
+/*.user__chat .list-cell:selected {*/
+/*    -fx-background-color: #677a7c;*/
+/*    -fx-background-radius: 0 15px 0 15px;*/
+/*    */
+/*}*/
+
+.list-cell{
+    -fx-background-color: transparent;
+    -fx-pointer-events:all;
+
+}
+.list-view {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+.scroll-bar:horizontal {
+    -fx-scale-y: 0;
+
+}

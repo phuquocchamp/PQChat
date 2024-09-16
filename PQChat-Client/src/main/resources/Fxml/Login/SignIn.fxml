@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane prefHeight="700.0" prefWidth="400.0" styleClass="login__container" stylesheets="@../../Css/Login/SignIn.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pqchatclient.Controller.Login.SignInController">
+   <AnchorPane layoutX="10.0" layoutY="14.0" prefHeight="659.0" prefWidth="366.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+      <TextField fx:id="password__textField" layoutX="31.0" layoutY="336.0" prefHeight="44.0" prefWidth="320.0" promptText="Password" />
+      <Text layoutX="28.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header__section" text="Log in to PQChat." wrappingWidth="312.58396911621094" />
+      <PasswordField fx:id="password__passwordField" layoutX="31.0" layoutY="336.0" prefHeight="44.0" prefWidth="320.0" promptText="Password" />
+      <Label layoutX="28.0" layoutY="134.0" prefHeight="42.0" prefWidth="326.0" styleClass="description" text="Welcome back! Login with your data that you entered during regiration" wrapText="true" />
+      <TextField fx:id="email__textField" layoutX="30.0" layoutY="246.0" prefHeight="44.0" prefWidth="320.0" promptText="Email" />
+      <CheckBox fx:id="remember__checkBox" layoutX="29.0" layoutY="419.0" mnemonicParsing="false" text="Remember me" />
+
+
+      <Button fx:id="forgotPassword__btn" layoutX="201.0" layoutY="414.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="164.0" styleClass="forgot__password" text="Forgot your password ?" underline="true" />
+      <Button fx:id="login__btn" layoutX="31.0" layoutY="482.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="320.0" styleClass="login__button" text="LOGIN" />
+      <Text layoutX="118.0" layoutY="599.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account ?" />
+      <Button fx:id="register__btn" layoutX="280.0" layoutY="581.0" mnemonicParsing="false" styleClass="register__button" text="Registor" />
+      <Label fx:id="error__lbl" layoutX="31.0" layoutY="552.0" text="Warning: Invalid name" />
+      <Button fx:id="hidePassword__btn" layoutX="302.0" layoutY="344.0" mnemonicParsing="false" styleClass="fidePassword__btn">
+         <graphic>
+            <FontIcon iconLiteral="fltral-eye-show-12" iconSize="20" />
+         </graphic>
+      </Button>
+   </AnchorPane>
+   <effect>
+      <DropShadow height="17.59" radius="12.0775" spread="0.11" width="32.72" />
+   </effect>
+</AnchorPane>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane
+        fx:id="client__parent"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.example.pqchatclient.Controller.Client.ClientController">
+    <left>
+        <fx:include source="ClientMenu.fxml"/>
+    </left>
+    <center>
+        <fx:include source="SingleContact/SingleContact.fxml"/>
+    </center>
+    <right>
+        <fx:include source="SingleContact/SingleChat.fxml"/>
+    </right>
+
+</BorderPane>

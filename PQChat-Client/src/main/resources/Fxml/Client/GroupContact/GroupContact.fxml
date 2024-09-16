@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane prefHeight="900.0" prefWidth="300.0" styleClass="container" stylesheets="@../../../Css/Client/Contacts.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pqchatclient.Controller.Client.GroupContact.GroupContactController">
+   <AnchorPane layoutY="-4.0" prefHeight="65.0" prefWidth="351.0" styleClass="user__profile" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <FontIcon fx:id="collapse_btn" iconColor="WHITE" iconLiteral="fltfmz-more-vertical-20" iconSize="25" layoutX="301.0" layoutY="45.0" styleClass="collapse__menu" AnchorPane.topAnchor="20.0" />
+      <Text layoutX="32.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="heading" text="Messages" />
+   </AnchorPane>
+   <Label layoutX="14.0" layoutY="235.0" styleClass="chat__heading" text="Messages" AnchorPane.topAnchor="235.0" />
+   <Label layoutX="14.0" layoutY="98.0" styleClass="user__heading" text="Online Clients:" AnchorPane.topAnchor="98.0" />
+   <ListView fx:id="groupChat__listView" layoutX="5.0" layoutY="267.0" prefHeight="619.0" prefWidth="330.0" styleClass="user__chat" />
+   <ListView fx:id="userOnline__listView" layoutX="12.0" layoutY="119.0" orientation="HORIZONTAL" prefHeight="100.0" prefWidth="316.0" styleClass="user__online" AnchorPane.topAnchor="119.0" />
+</AnchorPane>
