@@ -377,63 +377,63 @@ public class SingleChatController implements Initializable {
                     if(!receiverMessage.isEmpty()){
                         System.out.println("[LOG] >>> Receiver: " + receiverMessage);
                         JSONObject receiver = new JSONObject(receiverMessage);
-//                        switch (receiver.getString("prefix")) {
-//                            case "chat" -> {
-//                                String sender = receiver.getString("sender");
-//                                String message = receiver.getString("message");
-//                                String timeCreated = receiver.getString("timeCreated");
-//                                System.out.println("[LOG] >>> receiver from: " + sender + " message: " + message);
-//                                Platform.runLater(() -> generateMessageBox(message, timeCreated, "CENTER_LEFT"));
-//                            }
-//                            case "imageTransfer" -> {
-//                                System.out.println("[LOG] >>> Received an image from server !");
-//                                String fileName = receiver.getString("fileName");
-//                                String sender = receiver.getString("sender");
-//                                String encodedString = receiver.getString("data");
-//                                String timeCreated = receiver.getString("timeCreated");
-//
-//                                File imageFile = new File(getClass().getResource("/Images/") + fileName);
-//                                System.out.println("check " + imageFile);
-//                                byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-//                                try {
-//                                    FileUtils.writeByteArrayToFile(imageFile, decodedBytes);
-//                                } catch (IOException e) {
-//                                    throw new RuntimeException(e);
-//                                }
-//                                Platform.runLater(() -> {
-//                                    try {
-//                                        download__btn = new Button();
-//                                        generateImageBox(imageFile, timeCreated, "CENTER_LEFT");
-//                                        saveFile(imageFile);
-//                                    } catch (IOException e) {
-//                                        throw new RuntimeException(e);
-//                                    }
-//                                });
-//                            }
-//                            case "fileTransfer" -> {
-//                                String fileName = receiver.getString("fileName");
-//                                String sender = receiver.getString("sender");
-//                                String encodedString = receiver.getString("data");
-//                                String timeCreated = receiver.getString("timeCreated");
-//
-//                                File file = new File(getClass().getResource("/Files/") + fileName);
-//                                byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-//                                try {
-//                                    FileUtils.writeByteArrayToFile(file, decodedBytes);
-//                                } catch (IOException e) {
-//                                    throw new RuntimeException(e);
-//                                }
-//                                Platform.runLater(() -> {
-//                                    download__btn = new Button();
-//                                    generateFileBox(fileName, timeCreated, "CENTER_LEFT");
-//                                    try {
-//                                        saveFile(file);
-//                                    } catch (IOException e) {
-//                                        throw new RuntimeException(e);
-//                                    }
-//                                });
-//                            }
-//                        }
+                        switch (receiver.getString("prefix")) {
+                            case "chat" -> {
+                                String sender = receiver.getString("sender");
+                                String message = receiver.getString("message");
+                                String timeCreated = receiver.getString("timeCreated");
+                                System.out.println("[LOG] >>> receiver from: " + sender + " message: " + message);
+                                Platform.runLater(() -> generateMessageBox(message, timeCreated, "CENTER_LEFT"));
+                            }
+                            case "imageTransfer" -> {
+                                System.out.println("[LOG] >>> Received an image from server !");
+                                String fileName = receiver.getString("fileName");
+                                String sender = receiver.getString("sender");
+                                String encodedString = receiver.getString("data");
+                                String timeCreated = receiver.getString("timeCreated");
+
+                                File imageFile = new File(getClass().getResource("/Images/") + fileName);
+                                System.out.println("check " + imageFile);
+                                byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+                                try {
+                                    FileUtils.writeByteArrayToFile(imageFile, decodedBytes);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                Platform.runLater(() -> {
+                                    try {
+                                        download__btn = new Button();
+                                        generateImageBox(imageFile, timeCreated, "CENTER_LEFT");
+                                        saveFile(imageFile);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                            }
+                            case "fileTransfer" -> {
+                                String fileName = receiver.getString("fileName");
+                                String sender = receiver.getString("sender");
+                                String encodedString = receiver.getString("data");
+                                String timeCreated = receiver.getString("timeCreated");
+
+                                File file = new File(getClass().getResource("/Files/") + fileName);
+                                byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+                                try {
+                                    FileUtils.writeByteArrayToFile(file, decodedBytes);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                Platform.runLater(() -> {
+                                    download__btn = new Button();
+                                    generateFileBox(fileName, timeCreated, "CENTER_LEFT");
+                                    try {
+                                        saveFile(file);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                            }
+                        }
                     }
 
                 } catch (Exception e) {
