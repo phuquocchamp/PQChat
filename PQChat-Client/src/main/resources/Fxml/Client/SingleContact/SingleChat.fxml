@@ -13,21 +13,21 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="720.0" styleClass="container" stylesheets="@../../../Css/Client/Chatting.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pqchatclient.Controller.Client.SingleContact.SingleChatController">
-   <AnchorPane prefHeight="65.0" prefWidth="721.0" styleClass="user__nav" AnchorPane.rightAnchor="0.0">
-      <FontIcon iconLiteral="fltral-chat-20" layoutX="502.0" layoutY="50.0" />
-      <FontIcon iconLiteral="fltrmz-text-align-right-20" layoutX="646.0" layoutY="50.0" />
-      <FontIcon iconLiteral="fltfal-alert-20" layoutX="578.0" layoutY="50.0" />
-      <GNAvatarView fx:id="senderAvatar__img" layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="42.0" type="CIRCLE">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="720.0" styleClass="container" stylesheets="@../../../Css/Client/Chatting.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pqchatclient.Controller.Client.SingleContact.SingleChatController">
+   <AnchorPane prefHeight="44.0" prefWidth="721.0" styleClass="user__nav" AnchorPane.rightAnchor="0.0">
+      <FontIcon iconLiteral="fltral-chat-20" layoutX="536.0" layoutY="34.0" />
+      <FontIcon iconLiteral="fltrmz-text-align-right-20" layoutX="680.0" layoutY="34.0" />
+      <FontIcon iconLiteral="fltfal-alert-20" layoutX="612.0" layoutY="34.0" />
+      <GNAvatarView fx:id="senderAvatar__img" layoutX="14.0" layoutY="4.0" prefHeight="40.0" prefWidth="42.0" AnchorPane.bottomAnchor="2.0" AnchorPane.topAnchor="2.0">
          <Image url="@../../../Images/avatar-default.jpg" />
       </GNAvatarView>
-      <VBox layoutX="83.0" layoutY="13.0" prefHeight="40.0" prefWidth="343.0">
+      <VBox layoutX="83.0" layoutY="4.0" prefHeight="27.0" prefWidth="343.0">
          <Label fx:id="senderName__lbl" styleClass="sender__name" text="Default" />
          <Label fx:id="status" text="Online" />
       </VBox>
    </AnchorPane>
-   <AnchorPane layoutX="15.0" layoutY="695.0" prefHeight="86.0" prefWidth="688.0" styleClass="chatting_func" AnchorPane.bottomAnchor="19.0" AnchorPane.rightAnchor="15.0">
-      <TextArea fx:id="enterMessage__TextArea" layoutX="113.0" layoutY="14.0" prefHeight="61.0" prefWidth="502.0" promptText="Typing ..." styleClass="chatting__area" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0">
+   <AnchorPane layoutX="15.0" layoutY="695.0" prefHeight="60.0" prefWidth="688.0" styleClass="chatting_func" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0">
+      <TextArea fx:id="enterMessage__TextArea" layoutX="113.0" layoutY="8.0" prefHeight="40.0" prefWidth="502.0" promptText="Typing ..." styleClass="chatting__area" wrapText="true">
          <font>
             <Font size="20.0" />
          </font></TextArea>
@@ -48,13 +48,10 @@
             </graphic>
          </Button>
       </HBox>
-      <Button fx:id="sendMessage__btn" layoutX="615.0" layoutY="19.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="62.0" styleClass="sendMessage__btn">
-         <graphic>
-            <FontIcon iconColor="#fffbfb" iconLiteral="fltrmz-send-20" iconSize="35" />
-         </graphic>
-      </Button>
+      <Button fx:id="sendMessage__btn" layoutX="615.0" layoutY="19.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="62.0" styleClass="sendMessage__btn" />
+      <FontIcon iconColor="#fffbfb" iconLiteral="fltrmz-send-20" iconSize="25" layoutX="646.0" layoutY="45.0" />
    </AnchorPane>
-         <ScrollPane fx:id="messageContainer__scrollPane" fitToWidth="true" layoutX="11.0" layoutY="82.0" pannable="true" prefHeight="700.0" prefWidth="700.0" styleClass="chattingContainer__ScrollPane">
+         <ScrollPane fx:id="messageContainer__scrollPane" fitToWidth="true" layoutX="11.0" layoutY="58.0" pannable="true" prefHeight="756.0" prefWidth="700.0" styleClass="chattingContainer__ScrollPane">
 <!--            <VBox fx:id="messageSection__vBox" prefHeight="665.0" prefWidth="700.0" />-->
          </ScrollPane>
 

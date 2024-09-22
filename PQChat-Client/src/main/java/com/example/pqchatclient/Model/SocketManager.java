@@ -37,21 +37,4 @@ public class SocketManager {
     public String receiverMessage() throws IOException {
         return clientReader.readLine();
     }
-
-    public void sendFile(File file) throws IOException {
-        byte[] fileContent = FileUtils.readFileToByteArray(file);
-        String encodedString = Base64.getEncoder().encodeToString(fileContent);
-
-        clientWriter.write(encodedString);
-        clientWriter.newLine();
-        clientWriter.flush();
-
-    }
-
-    public void receiverFile(File file) throws IOException {
-        String encodedString = receiverMessage();
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-        FileUtils.writeByteArrayToFile(file, decodedBytes);
-    }
-
 }

@@ -29,7 +29,6 @@ module com.example.chattingapp {
 
     exports com.example.pqchatclient.Model;
     exports com.example.pqchatclient.View;
-    exports com.example.pqchatclient.Controller.Client.GroupContact;
     exports com.example.pqchatclient.Controller.Client.SingleContact;
     exports com.example.pqchatclient.Controller.Client.ChatBot;
 

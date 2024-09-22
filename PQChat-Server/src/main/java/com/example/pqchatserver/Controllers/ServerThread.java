@@ -25,7 +25,6 @@ public class ServerThread implements Runnable {
     private final Socket serverSocket;
     private final BufferedWriter serverWriter;
     private final BufferedReader serverReader;
-    private int random;
 
     public ServerThread(Socket serverSocket) throws IOException {
         this.isClosed = false;
@@ -78,21 +77,10 @@ public class ServerThread implements Runnable {
                         Server.serverThreadBus.multiCastSend(onlineUsers.toString());
                     }
                 }
-                case "validateEmail" -> {
-                    String email = (String) reader.get("email");
-                    random = getRandomNumberUsingNextInt(10000, 99999);
-                    Email.sendEmail(email, "Validation Code", String.valueOf(random));
-                }
                 case "createAccount" -> {
-                    String fullname = (String) reader.getString("fullname");
+                    String fullname = (String) reader.get("fullname");
                     String username = (String) reader.get("username");
                     String password = (String) reader.get("password");
-                    String validationCode = (String) reader.get("validationCode");
-
-                    if(!validationCode.equals(String.valueOf(random))){
-                        writer.put("flag", "failed");
-                        writer.put("message", "Validation Code Not Found");
-                    }
 
                     writer.put("prefix", "createAccount");
                     writer.put("username", username);
@@ -111,6 +99,16 @@ public class ServerThread implements Runnable {
                     String receiver = (String) reader.get("receiver");
                     Server.serverThreadBus.messageTransfer(receiver, streamMessage);
                 }
+                case "resetPassword" -> {
+                    String username = reader.getString("username");
+                    String newPassword = reader.getString("newPassword");
+                    boolean check = Model.getInstance().getDatabaseDriver().updateUserPassword(username, newPassword);
+                    writer.put("prefix", "resetPassword");
+                    writer.put("username", username);
+                    writer.put("flag", check ? "success" : "failed");
+                    Server.serverThreadBus.messageTransfer(this.threadUUID, writer.toString());
+                }
+
                 case "logout" -> {
                     for(int i = 0; i < Server.serverThreadBus.getOnlineUsers().length(); ++i){
                         JSONObject retrieved = Server.serverThreadBus.getOnlineUsers().getJSONObject(i);

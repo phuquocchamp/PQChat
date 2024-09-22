@@ -73,7 +73,7 @@ public class DatabaseDriver {
             preparedStatement.setString(1, UUID.randomUUID().toString());
             preparedStatement.setString(2, username);
             preparedStatement.setString(3, password);
-            preparedStatement.setString(4, fullname);
+            preparedStatement.setString(5, fullname);
 
             // đọc file từ path và lưu vào image data
             // preparedStatement.setString(4, iamge_data);
@@ -88,6 +88,27 @@ public class DatabaseDriver {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean updateUserPassword(String username, String newPassword) {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            String sql = "UPDATE users SET password = ? WHERE username = ?";
+            preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setString(2, username);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("[LOG] >>> Error updating password for user: " + username);
+        }
+        return false;
+    }
+
+
     // ---------------------------- Fetch User By Username ---------------------------------//
     public boolean fetchUserByUsername(String username){
         ResultSet resultSet = null;

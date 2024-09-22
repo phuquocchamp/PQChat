@@ -70,6 +70,7 @@ public class ServerThreadBus {
             if (serverThread.getClientID().equals(clientID)) {
                 try {
                     serverThread.writeMessage(message);
+                    System.out.println("[LOG] >>> Message transfer to " + serverThread.getClientID() + " " + message);
                     break;
                 } catch (IOException e) {
                     System.out.println("[LOG] >>> Message Transfer Error: " + e.getMessage());
@@ -84,6 +85,7 @@ public class ServerThreadBus {
             if (serverThread.getThreadUUID().equals(threadUUID)) {
                 try {
                     serverThread.writeMessage(message);
+                    System.out.println("[LOG] >>> Message transfer to " + serverThread.getClientID() + " " + message);
                     break;
                 } catch (IOException e) {
                     System.out.println("[LOG] >>> Message Transfer Error: " + e.getMessage());

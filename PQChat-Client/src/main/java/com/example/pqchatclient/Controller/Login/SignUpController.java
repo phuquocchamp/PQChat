@@ -3,12 +3,14 @@ package com.example.pqchatclient.Controller.Login;
 import com.example.pqchatclient.Model.Model;
 import com.example.pqchatclient.View.LoginViewOptions;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -38,7 +40,7 @@ public class SignUpController implements Initializable {
         );
         pauseTransition.play();
 
-        sendValidationCode__btn.setOnAction(event -> onValidateCode());
+//        sendValidationCode__btn.setOnAction(event -> onValidateCode());
     }
 
     private void onValidateCode() {
@@ -63,14 +65,14 @@ public class SignUpController implements Initializable {
             String fullname = fullname__textField.getText();
             String email = email__textField.getText();
             String password = encodePassword(password__textField.getText());
-            String validationCode = validationCode__textField.getText();
+//            String validationCode = validationCode__textField.getText();
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("prefix", "createAccount");
             jsonObject.put("fullname", fullname);
             jsonObject.put("username", email);
             jsonObject.put("password", password);
-            jsonObject.put("validationCode", validationCode);
+//            jsonObject.put("validationCode", validationCode);
 
             ExecutorService service = Executors.newSingleThreadExecutor();
             service.submit(() -> {
@@ -78,16 +80,25 @@ public class SignUpController implements Initializable {
             });
 
             service.submit(() -> {
-                while(true){
-                    String checkCreateAccount = Model.getInstance().getSocketManager().receiverMessage();
-                    JSONObject createdFlag = new JSONObject(checkCreateAccount);
+                String checkCreateAccount = null;
+                try {
+                    checkCreateAccount = Model.getInstance().getSocketManager().receiverMessage();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                JSONObject createdFlag = new JSONObject(checkCreateAccount);
+                Platform.runLater(() -> {
                     if (createdFlag.getString("flag").equals("success")) {
-                        Model.getInstance().getViewFactory().getLoginSelectedMenuItem().set(LoginViewOptions.SIGNIN);
+                        error__lbl.setTextFill(Paint.valueOf("GREEN"));
+                        error__lbl.setText("Created Account Successfully !");
+                        onSignInView();
                     } else {
                         error__lbl.setTextFill(Paint.valueOf("RED"));
-                        error__lbl.setText(createdFlag.getString("message"));
+                        error__lbl.setText("Failed to created account !");
                     }
-                }
+                });
+
+
             });
 
         }

@@ -19,35 +19,35 @@
 }
 
 
-
-.account{
+.account {
     /*-fx-font-family: "DejaVu Sans Mono";*/
     -fx-font-size: 18px;
 }
 
-.account__user{
+.account__user {
     -fx-text-fill: #CCCCCC;
 
 }
-.account__type{
+
+.account__type {
     -fx-font-size: 14px;
     -fx-text-fill: #98ca65;
 }
 
 
-.collapse__menu{
+.collapse__menu {
     -fx-icon-color: white;
     -fx-font-size: 25px;
 }
 
 /*Online Users*/
-.user__heading{
-    -fx-font-size: 17px;
+.user__heading {
+    -fx-font-size: 16px;
     -fx-text-fill: #99CC99;
 }
 
 
-.user__online{
+.user__online {
     -fx-background-color: transparent;
     -fx-background-radius: 15px;
 }
@@ -57,14 +57,16 @@
 /*}*/
 
 /*Friend Chat*/
-.chat__heading{
-    -fx-font-size: 17px;
+.chat__heading {
+    -fx-font-size: 16px;
     -fx-text-fill: #99CC99;
 }
-.user__chat{
+
+.user__chat {
     -fx-background-color: transparent;
     -fx-background-radius: 15px;
 }
+
 .user__chat .list-cell {
     -fx-spacing: 10px 0;
     -fx-text-alignment: center;
@@ -76,11 +78,12 @@
 
 }
 
-.list-cell{
+.list-cell {
     -fx-background-color: transparent;
-    -fx-pointer-events:all;
+    -fx-pointer-events: all;
 
 }
+
 .list-view {
     -fx-background-color: transparent;
 }
@@ -88,6 +91,7 @@
 .scroll-bar:vertical {
     -fx-scale-x: 0;
 }
+
 .scroll-bar:horizontal {
     -fx-scale-y: 0;
 

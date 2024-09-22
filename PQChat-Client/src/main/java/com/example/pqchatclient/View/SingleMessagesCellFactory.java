@@ -1,7 +1,6 @@
 package com.example.pqchatclient.View;
 
 import com.example.pqchatclient.Controller.Client.SingleContact.SingleMessagesCellController;
-import com.example.pqchatclient.Model.Client;
 import com.example.pqchatclient.Model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;

@@ -2,15 +2,21 @@ package com.example.pqchatclient.Controller.Login;
 
 import com.example.pqchatclient.Model.Model;
 import com.example.pqchatclient.Utils.Email;
+import com.example.pqchatclient.Utils.Encrypt;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ForgotPasswordController implements Initializable {
     public TextField emailAddress__textField;
@@ -52,20 +58,43 @@ public class ForgotPasswordController implements Initializable {
         }
 
 
-
     }
 
-    public void onSubmitNewPassword(){
+    public void onSubmitNewPassword() {
         System.out.println(validationCode);
-        if(!validationCode__textField.getText().equals(validationCode)){
+        if (!validationCode__textField.getText().equals(validationCode)) {
             error__lbl.setText("Wrong validation code. Please do it again!");
-        }else {
+        } else {
+
             error__lbl.setText("Successfully!");
             String newPassword = newPassword__textField.getText();
             String email = emailAddress__textField.getText();
-            String messageForm = "resetPassword_" + email + "_" + newPassword;
-            Model.getInstance().getSocketManager().sendMessage(messageForm);
-            System.out.println("[Client Log] --> Client " + Model.getInstance().getTargetUser().getId().get() + " sent a reset password request.");
+
+            JSONObject resetPassword = new JSONObject();
+            resetPassword.put("prefix", "resetPassword");
+            resetPassword.put("username", email);
+            resetPassword.put("newPassword", Encrypt.encodePassword(newPassword));
+
+            ExecutorService service = Executors.newSingleThreadExecutor();
+            service.submit(() -> Model.getInstance().getSocketManager().sendMessage(resetPassword.toString()));
+            service.submit(() -> {
+                try {
+                    String checkFlag = Model.getInstance().getSocketManager().receiverMessage();
+                    JSONObject jsonObject = new JSONObject(checkFlag);
+
+                    if (jsonObject.getString("prefix").equals("resetPassword")) {
+                        if (jsonObject.getString("flag").equals("success")) {
+                            Platform.runLater(() -> {
+                                emailAddress__textField.setText("Successfully Reset Password");
+                                onBackLoginWindow();
+
+                            });
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }
 
@@ -76,7 +105,7 @@ public class ForgotPasswordController implements Initializable {
     }
 
     // private validation code
-    public String CodeGenerate(){
+    public String CodeGenerate() {
         Random random = new Random();
         int validationCode = random.nextInt(900000) + 100000;
         return String.valueOf(validationCode);

@@ -85,7 +85,7 @@ public class Email {
                 "                                                style=\"display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;\"></span>\n" +
                 "                                            <p style=\"color:#455056; font-size:15px;line-height:24px; margin:0;\">\n" +
                 "                                                We hope this email finds you well. We have received a request to reset\n" +
-                "                                                your password for your account with <strong>PQChat</strong>. To ensure\n" +
+                "                                                your password for your account with <strong>KLChat</strong>. To ensure\n" +
                 "                                                the security of\n" +
                 "                                                your account, we are providing you with a <strong>Validation\n" +
                 "                                                    Code</strong>.\n" +
@@ -103,13 +103,13 @@ public class Email {
                 "                        <tr>\n" +
                 "                            <td style=\"height:20px;\">&nbsp;</td>\n" +
                 "                        </tr>\n" +
-                "                        <tr>\n" +
-                "                            <td style=\"text-align:center;\">\n" +
-                "                                <p\n" +
-                "                                    style=\"font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;\">\n" +
-                "                                    &copy; <strong>https://github.com/phuquocchamp</strong></p>\n" +
-                "                            </td>\n" +
-                "                        </tr>\n" +
+//                "                        <tr>\n" +
+//                "                            <td style=\"text-align:center;\">\n" +
+//                "                                <p\n" +
+//                "                                    style=\"font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;\">\n" +
+//                "                                    &copy; <strong>https://github.com/phuquocchamp</strong></p>\n" +
+//                "                            </td>\n" +
+//                "                        </tr>\n" +
                 "                        <tr>\n" +
                 "                            <td style=\"height:80px;\">&nbsp;</td>\n" +
                 "                        </tr>\n" +
@@ -156,7 +156,7 @@ public class Email {
     }
 
     public static void main(String[] args) {
-        sendEmail("phuquocchamp@gmail.com", "Reset Password Request 2", "12344");
+        sendEmail("hoangtanphuquoc@gmail.com", "Reset Password Request 2", "12344");
     }
 
 }
