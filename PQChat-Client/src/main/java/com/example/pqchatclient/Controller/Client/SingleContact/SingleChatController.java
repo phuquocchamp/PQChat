@@ -65,11 +65,6 @@ public class SingleChatController implements Initializable {
     private String targetUserID;
     private Map<String, VBox> messageBoxMap = new HashMap<>();
 
-    String projectPath = "/home/phuquocchamp/Coding/BE/Java/JavaFX/PQChat-Client/src/main/resources/Files/";
-    String imageFilePath = "/Images/Profiles";
-    String profileFilePath = "/home/phuquocchamp/Coding/BE/Java/JavaFX/PQChat-Client/src/main/resources/Images/Profiles";
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         senderName__lbl.textProperty().bind(Model.getInstance().getTargetUser().getFullName());
@@ -368,8 +363,9 @@ public class SingleChatController implements Initializable {
 
     }
 
+    ExecutorService service = Executors.newCachedThreadPool();
+
     private void serverResponse() {
-        ExecutorService service = Executors.newCachedThreadPool();
         service.submit(() -> {
             while (true) {
                 try {
@@ -392,7 +388,7 @@ public class SingleChatController implements Initializable {
                                 String encodedString = receiver.getString("data");
                                 String timeCreated = receiver.getString("timeCreated");
 
-                                File imageFile = new File(getClass().getResource("/Images/") + fileName);
+                                File imageFile = new File(getClass().getResource("src/main/resources/Images/") + fileName);
                                 System.out.println("check " + imageFile);
                                 byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
                                 try {
@@ -416,7 +412,7 @@ public class SingleChatController implements Initializable {
                                 String encodedString = receiver.getString("data");
                                 String timeCreated = receiver.getString("timeCreated");
 
-                                File file = new File(getClass().getResource("/Files/") + fileName);
+                                File file = new File(getClass().getResource("src/main/resources/Files/") + fileName);
                                 byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
                                 try {
                                     FileUtils.writeByteArrayToFile(file, decodedBytes);
