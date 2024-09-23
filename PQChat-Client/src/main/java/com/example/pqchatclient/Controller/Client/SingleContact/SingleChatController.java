@@ -1,6 +1,7 @@
 package com.example.pqchatclient.Controller.Client.SingleContact;
 
 import com.example.pqchatclient.Model.Model;
+import io.github.cdimascio.dotenv.Dotenv;
 import io.github.gleidson28.GNAvatarView;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -65,7 +66,6 @@ public class SingleChatController implements Initializable {
     private static SingleChatController instance;
 
     public SingleChatController() {
-        // Constructor
     }
 
     public static SingleChatController getInstance() {
@@ -75,11 +75,13 @@ public class SingleChatController implements Initializable {
         return instance;
     }
 
+    Dotenv dotenv = Dotenv.load();
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         senderName__lbl.textProperty().bind(Model.getInstance().getTargetUser().getFullName());
         targetUserID = Model.getInstance().getTargetUser().getId().get();
-
         Model.getInstance().getTargetUser().getId().addListener((observableValue, oldValue, newValue) -> {
             targetUserID = Model.getInstance().getTargetUser().getId().get();
             senderName__lbl.textProperty().bind(Model.getInstance().getTargetUser().getFullName());
@@ -219,6 +221,7 @@ public class SingleChatController implements Initializable {
     }
 
     private void saveFile(File selectedImage) throws IOException {
+
         Stage stage = (Stage) sendMessage__btn.getScene().getWindow();
 
         FileInputStream fileInputStream = new FileInputStream(selectedImage);
@@ -227,7 +230,9 @@ public class SingleChatController implements Initializable {
         fileInputStream.close();
         String filePath = selectedImage.getAbsolutePath();
         Path path = Paths.get(filePath);
+        System.out.println("[LOG] >>> save to: " + filePath);
         String fileExtension = FilenameUtils.getExtension(path.getFileName().toString());
+        System.out.println("[LOG] >>> file extension: " + fileExtension);
 
         // download image
         download__btn.setOnAction(event -> {
@@ -264,10 +269,10 @@ public class SingleChatController implements Initializable {
         FontIcon dl__icon = new FontIcon("fltfal-arrow-download-16");
         dl__icon.setIconSize(15);
         dl__icon.setIconColor(Color.DARKGRAY);
-//        download__btn.setGraphic(dl__icon);
-//        download__btn.setStyle("-fx-background-color: transparent; -fx-text-alignment: center; -fx-cursor: hand;");
-//
-//        download__btn.setPadding(new Insets(0, 15, 0, 0));
+        download__btn.setGraphic(dl__icon);
+        download__btn.setStyle("-fx-background-color: transparent; -fx-text-alignment: center; -fx-cursor: hand;");
+
+        download__btn.setPadding(new Insets(0, 15, 0, 0));
         // Download picture function
         Image image = new Image(new ByteArrayInputStream(fileData));
         ImageView imageView = new ImageView(image);
@@ -417,7 +422,7 @@ public class SingleChatController implements Initializable {
                 String encodedString = receiver.getString("data");
                 String timeCreated = receiver.getString("timeCreated");
 
-                File imageFile = new File(SingleChatController.class.getResource("src/main/resources/Images/") + fileName);
+                File imageFile = new File(dotenv.get("RESOURCE_PATH") + "Images/Downloaded/" + fileName);
                 System.out.println("check " + imageFile);
                 byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
                 try {
@@ -441,7 +446,7 @@ public class SingleChatController implements Initializable {
                 String encodedString = receiver.getString("data");
                 String timeCreated = receiver.getString("timeCreated");
 
-                File file = new File(SingleChatController.class.getResource("src/main/resources/Files/") + fileName);
+                File file = new File(dotenv.get("RESOURCE_PATH") + "Files/Downloaded/" + fileName);
                 byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
                 try {
                     FileUtils.writeByteArrayToFile(file, decodedBytes);

@@ -56,8 +56,6 @@ public class ForgotPasswordController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void onSubmitNewPassword() {
@@ -65,7 +63,6 @@ public class ForgotPasswordController implements Initializable {
         if (!validationCode__textField.getText().equals(validationCode)) {
             error__lbl.setText("Wrong validation code. Please do it again!");
         } else {
-
             error__lbl.setText("Successfully!");
             String newPassword = newPassword__textField.getText();
             String email = emailAddress__textField.getText();

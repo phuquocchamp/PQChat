@@ -41,6 +41,7 @@ public class ClientMenuController implements Initializable {
     private void onGroupChat() {
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.GROUPCHAT);
     }
+
     private void onChatBot() {
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.CHATBOT);
     }
@@ -49,15 +50,13 @@ public class ClientMenuController implements Initializable {
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.SETTING);
     }
 
-    private void onExitWindow(){
+    private void onExitWindow() {
         Stage stage = (Stage) exit__btn.getScene().getWindow();
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        service.submit(() -> {
-            JSONObject logoutObject = new JSONObject();
-            logoutObject.put("prefix", "logout");
-            logoutObject.put("sender", Model.getInstance().getCurrentUser().getId().get());
-            Model.getInstance().getSocketManager().sendMessage(logoutObject.toString());
-        });
+        JSONObject removeUser = new JSONObject();
+        removeUser.put("prefix", "logout");
+        removeUser.put("user", Model.getInstance().getCurrentUser().getId().get());
+        Model.getInstance().getSocketManager().sendMessage(removeUser.toString());
+        System.out.println(removeUser.toString());
         Model.getInstance().getViewFactory().showLoginWindow();
         Model.getInstance().getViewFactory().closeStage(stage);
     }

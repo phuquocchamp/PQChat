@@ -111,9 +111,13 @@ public class ServerThread implements Runnable {
                 case "logout" -> {
                     for(int i = 0; i < Server.serverThreadBus.getOnlineUsers().length(); ++i){
                         JSONObject retrieved = Server.serverThreadBus.getOnlineUsers().getJSONObject(i);
-                        if(retrieved.getString("clientID").equals(reader.getString("sender"))) {
+                        if(retrieved.getString("clientID").equals(reader.getString("user"))) {
                             Server.serverThreadBus.getOnlineUsers().remove(i);
-                            Server.serverThreadBus.removeServerThread(reader.getString("sender"));
+                            Server.serverThreadBus.removeServerThread(reader.getString("user"));
+                            JSONObject removeUser = new JSONObject();
+                            removeUser.put("prefix", "removeUser");
+                            removeUser.put("user", reader.getString("user"));
+                            Server.serverThreadBus.boardCast(reader.getString("user"), removeUser.toString());
                         }
                     }
                 }

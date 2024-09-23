@@ -2,6 +2,7 @@ package com.example.pqchatclient.Model;
 
 import com.example.pqchatclient.Controller.Client.SingleContact.SingleChatController;
 import com.example.pqchatclient.Controller.Client.SingleContact.SingleContactController;
+import com.example.pqchatclient.Controller.Login.SignUpController;
 import javafx.application.Platform;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,33 +52,51 @@ public class SocketManager {
             String message;
             while ((message = clientReader.readLine()) != null) {
                 JSONObject jsonObject = new JSONObject(message);
+
+                if (
+                        jsonObject.getString("prefix").equals("chat") ||
+                                jsonObject.getString("prefix").equals("imageTransfer") ||
+                                jsonObject.getString("prefix").equals("fileTransfer")
+                ) {
+                    System.out.println("[LOG] >>> Chat, Image, File received: " + jsonObject.toString(4));
+                    SingleChatController.getInstance().loadMessage(jsonObject.toString());
+                }
+
                 if (jsonObject.getString("prefix").equals("updateOnlineUsers")) {
-                    if (jsonObject.getString("prefix").equals("updateOnlineUsers")) {
-                        JSONArray onlineUsersArray = jsonObject.getJSONArray("onlineUsers");
-                        System.out.println("[LOG] >>> Update Online Users: " + onlineUsersArray);
-                        Platform.runLater(() -> {
-                            Model.getInstance().getOnlineUsers().clear();
-                            for (int i = 0; i < onlineUsersArray.length(); i++) {
-                                JSONObject userObject = onlineUsersArray.getJSONObject(i);
-                                String clientID = userObject.getString("clientID");
-                                String fullName = userObject.getString("fullname");
-                                String avatarPath = userObject.optString("avatar", "Images/avatar-default.jpg");
-                                User newUser = new User(clientID, fullName, avatarPath);
-                                if (!isUserAlreadyOnline(newUser)) {
-                                    Model.getInstance().getOnlineUsers().add(newUser);
-                                }
+                    JSONArray onlineUsersArray = jsonObject.getJSONArray("onlineUsers");
+                    System.out.println("[LOG] >>> Update Online Users: " + onlineUsersArray);
+                    Platform.runLater(() -> {
+                        Model.getInstance().getOnlineUsers().clear();
+                        for (int i = 0; i < onlineUsersArray.length(); i++) {
+                            JSONObject userObject = onlineUsersArray.getJSONObject(i);
+                            String clientID = userObject.getString("clientID");
+                            String fullName = userObject.getString("fullname");
+                            String avatarPath = userObject.optString("avatar", "Images/avatar-default.jpg");
+                            User newUser = new User(clientID, fullName, avatarPath);
+                            if (!isUserAlreadyOnline(newUser)) {
+                                Model.getInstance().getOnlineUsers().add(newUser);
                             }
-                        });
+                        }
+                    });
+                }
+
+                if (jsonObject.getString("prefix").equals("removeUser")) {
+                    for (User user : Model.getInstance().getOnlineUsers()) {
+                        if (user.getId().equals(jsonObject.getString("user"))) {
+                            Model.getInstance().getOnlineUsers().remove(user);
+                            System.out.println("[LOG] >>> Removed user: " + user.getId());
+                        }
                     }
                 }
-                if(
-                    jsonObject.getString("prefix").equals("chat") ||
-                    jsonObject.getString("prefix").equals("imageTransfer") ||
-                    jsonObject.getString("prefix").equals("fileTransfer")
-                ) {
-                    System.out.println("[LOG] >>> Chat, Image, File received: " + jsonObject.toString());
-                    SingleChatController.getInstance().loadMessage(jsonObject.toString());
-                }else {
+
+                if (jsonObject.getString("prefix").equals("createAccount")) {
+                    System.out.println("[LOG] >> Create Account Response: " + jsonObject.toString(4));
+                    if (SignUpController.getInstance() != null) {
+                        Platform.runLater(() -> SignUpController.getInstance().loadResponse(jsonObject.toString()));
+                    } else {
+                        System.out.println("SignUpController chưa được khởi tạo.");
+                    }
+                } else {
                     messageQueue.offer(message);
                     System.out.println("[LOG] >>> Socket Client Received: " + jsonObject.toString(4));
                 }

@@ -17,6 +17,7 @@ module com.example.chattingapp {
     requires org.apache.httpcomponents.httpclient;
     requires org.json;
     requires static lombok;
+    requires java.dotenv;
 
 
     opens com.example.pqchatclient to javafx.fxml;

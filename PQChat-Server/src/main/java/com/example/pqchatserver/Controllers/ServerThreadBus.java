@@ -55,13 +55,14 @@ public class ServerThreadBus {
 
 
     public void removeServerThread(String clientID) {
-        for (int i = 0; i < Server.serverThreadBus.getServerThreadListSize(); i++) {
-            if (Server.serverThreadBus.getServerThreadList().get(i).getClientID().equals(clientID)) {
-                Server.serverThreadBus.serverThreadList.remove(i);
-                System.out.println("[LOG] >>> Removed server thread " + clientID);
+        for (ServerThread serverThread : Server.serverThreadBus.getServerThreadList()) {
+            if (serverThread.getClientID().equals(clientID)) {
+                serverThreadList.remove(serverThread);
+                System.out.println("[LOG] >>> Removed server thread " + serverThread.getClientID());
                 break;
             }
         }
+
     }
 
 
