@@ -19,9 +19,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 public class SingleContactController implements Initializable {
 
@@ -32,10 +30,16 @@ public class SingleContactController implements Initializable {
     public FontIcon collapse_btn;
     public ListView<User> userOnline__listView;
     public ListView<User> userChat__listView;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         welcome_label.setText("Hi, " + Model.getInstance().getCurrentUser().getFullName().get());
-        onUpdateOnlineUsers();
+//        try {
+//            onUpdateOnlineUsers();
+//        } catch (ExecutionException | InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         onlineUsers = Model.getInstance().getOnlineUsers();
         userOnline__listView.setItems(onlineUsers);
         userOnline__listView.setCellFactory(event -> new SingleOnlineCellFactory());
@@ -56,54 +60,34 @@ public class SingleContactController implements Initializable {
 
     }
 
-    private void onUpdateOnlineUsers() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-
-        // Vòng lặp liên tục để lắng nghe thông điệp từ server
-        executorService.submit(() -> {
-            while (true) {
-                try {
-                    String receiverMessage = Model.getInstance().getSocketManager().receiverMessage();
-                    JSONObject checkOnlineUser = new JSONObject(receiverMessage);
-
-                    // Kiểm tra xem có thông báo cập nhật người dùng online hay không
-                    if (checkOnlineUser.getString("prefix").equals("updateOnlineUsers")) {
-                        System.out.println("[LOG] >>> Update Online Users: " + checkOnlineUser);
-                        JSONArray onlineUsersArray = checkOnlineUser.getJSONArray("onlineUsers");
-                        System.out.println("[LOG] >>> Online Users: " + onlineUsersArray);
-
-                        // Cập nhật danh sách online trong luồng JavaFX
-                        Platform.runLater(() -> {
-                            Model.getInstance().getOnlineUsers().clear();
-                            for (int i = 0; i < onlineUsersArray.length(); i++) {
-                                JSONObject userObject = onlineUsersArray.getJSONObject(i);
-                                String clientID = userObject.getString("clientID");
-                                String fullName = userObject.getString("fullname");
-                                String avatarPath = userObject.optString("avatar", "Images/avatar-default.jpg");
-
-                                // Tạo đối tượng User và thêm vào danh sách nếu chưa có
-                                User newUser = new User(clientID, fullName, avatarPath);
-                                if (!isUserAlreadyOnline(newUser)) {
-                                    Model.getInstance().getOnlineUsers().add(newUser);
-                                }
-                            }
-                            System.out.println("[LOG] >>> Online Users List Updated.");
-                        });
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    public static void onUpdateOnlineUsers() throws ExecutionException, InterruptedException {
+//        ExecutorService service = Executors.newSingleThreadExecutor();
+//            Future<String> mr = service.submit(() -> Model.getInstance().getSocketManager().retrieveMessageWithTimeout(5, TimeUnit.SECONDS));
+//            if(mr.get() != null) {
+//                JSONObject checkOnlineUser = new JSONObject(mr.get());
+//                if (checkOnlineUser.getString("prefix").equals("updateOnlineUsers")) {
+//                    System.out.println("[LOG] >>> Update Online Users: " + checkOnlineUser);
+//                    JSONArray onlineUsersArray = checkOnlineUser.getJSONArray("onlineUsers");
+//                    System.out.println("[LOG] >>> Online Users: " + onlineUsersArray);
+//
+//                    Platform.runLater(() -> {
+//                        Model.getInstance().getOnlineUsers().clear();
+//                        for (int i = 0; i < onlineUsersArray.length(); i++) {
+//                            JSONObject userObject = onlineUsersArray.getJSONObject(i);
+//                            String clientID = userObject.getString("clientID");
+//                            String fullName = userObject.getString("fullname");
+//                            String avatarPath = userObject.optString("avatar", "Images/avatar-default.jpg");
+//                            User newUser = new User(clientID, fullName, avatarPath);
+//                            if (!isUserAlreadyOnline(newUser)) {
+//                                Model.getInstance().getOnlineUsers().add(newUser);
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+//
+//    }
 
 
-    private boolean isUserAlreadyOnline(User user) {
-        for (User onlineUser : Model.getInstance().getOnlineUsers()) {
-            if (onlineUser.getId().equals(user.getId())) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }

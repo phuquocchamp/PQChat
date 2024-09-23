@@ -19,10 +19,10 @@ public class ClientController implements Initializable {
                     client__parent.setCenter(Model.getInstance().getViewFactory().getSingleContactView());
                     client__parent.setRight(Model.getInstance().getViewFactory().getSingleChatView());
                 }
-                case GROUPCHAT -> {
-                    client__parent.setCenter(Model.getInstance().getViewFactory().getGroupContactView());
-                    client__parent.setRight(Model.getInstance().getViewFactory().getGroupChatView());
-                }
+//                case GROUPCHAT -> {
+//                    client__parent.setCenter(Model.getInstance().getViewFactory().getGroupContactView());
+//                    client__parent.setRight(Model.getInstance().getViewFactory().getGroupChatView());
+//                }
                 case CHATBOT -> {
                     client__parent.setCenter(Model.getInstance().getViewFactory().getChatBotContactView());
                     client__parent.setRight(Model.getInstance().getViewFactory().getChatBotChatView());

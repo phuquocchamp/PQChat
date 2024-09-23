@@ -4,16 +4,17 @@ import com.example.pqchatclient.Model.Model;
 import com.example.pqchatclient.Model.User;
 import com.example.pqchatclient.Utils.Encrypt;
 import com.example.pqchatclient.View.LoginViewOptions;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class SignInController implements Initializable {
     public TextField email__textField;
@@ -40,7 +41,7 @@ public class SignInController implements Initializable {
         login__btn.setOnAction(event -> {
             try {
                 onLogin();
-            } catch (IOException e) {
+            } catch (IOException | ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -50,22 +51,10 @@ public class SignInController implements Initializable {
     }
 
 
-    private void onLogin() throws IOException {
+    private void onLogin() throws IOException, ExecutionException, InterruptedException {
         Stage stage = (Stage) error__lbl.getScene().getWindow();
-        // Security to validate account.
-        String usernameTF = "";
-        String passwordTF = "";
-        try {
-            usernameTF = email__textField.getText();
-        } catch (Exception e) {
-            error__lbl.setText("Please Input Email");
-        }
-        try {
-            passwordTF = password__passwordField.getText();
-        } catch (Exception e) {
-            error__lbl.setText("Please Input Password");
-        }
-
+        String usernameTF = email__textField.getText();
+        String passwordTF = password__passwordField.getText();
 
         // ---------------------- Verify account from server -------------------------//
         String username = usernameTF;
@@ -76,39 +65,45 @@ public class SignInController implements Initializable {
         userInfo.put("username", username);
         userInfo.put("password", password);
 
+        // Gửi thông tin đăng nhập lên server
         ExecutorService service = Executors.newSingleThreadExecutor();
         service.submit(() -> Model.getInstance().getSocketManager().sendMessage(userInfo.toString()));
-        String credential = Model.getInstance().getSocketManager().receiverMessage();
-        if (!credential.isEmpty()) {
-            JSONObject receiver = new JSONObject(credential);
-            System.out.println("[LOG] >>> Receiver: " + receiver);
-            if (receiver.getString("prefix").equals("evaluateAccount")) {
-                if (receiver.getString("flag").equals("success")) {
-                    String clientID = receiver.getString("clientID");
-                    String fullName = receiver.getString("fullname");
-                    // String avatar = receiver.getString("avatar");
 
-                    String defaultAvatarPath = "Images/avatar-default.jpg";
 
-                    // Model.getInstance().setCurrentClient(clientID);
+        boolean messageProcessed = false;
+        while (!messageProcessed) {
+            // Lấy phản hồi từ server
+            Future<String> mr = service.submit(() -> Model.getInstance().getSocketManager().retrieveMessageWithTimeout(5, TimeUnit.SECONDS));
+            System.out.println("[LOG] >> mr: " + mr.get());
+            if (mr.get() != null) {
+                JSONObject receiver = new JSONObject(mr.get());
+                System.out.println("[LOG] >>> Receiver: " + receiver);
 
-                    User user = new User(clientID, fullName, defaultAvatarPath);
-                    Model.getInstance().setCurrentUser(user);
-//                    Model.getInstance().getOnlineUsers().add(user);
+                if (receiver.getString("prefix").equals("evaluateAccount")) {
+                    if (receiver.getString("flag").equals("success")) {
+//                        Model.getInstance().getSocketManager().removeMessage();
 
-                    Model.getInstance().getViewFactory().showClientWindow();
-                    Model.getInstance().getViewFactory().closeStage(stage);
-                } else {
-                    email__textField.setText("");
-                    password__textField.setText("");
-                    error__lbl.setText("No Such Login Credential!");
+                        String clientID = receiver.getString("clientID");
+                        String fullName = receiver.getString("fullname");
+                        String defaultAvatarPath = "Images/avatar-default.jpg";
+                        User user = new User(clientID, fullName, defaultAvatarPath);
+                        Model.getInstance().setCurrentUser(user);
+                        Platform.runLater(() -> {
+                            Model.getInstance().getViewFactory().showClientWindow();
+                            Model.getInstance().getViewFactory().closeStage(stage);
+                        });
+                    } else {
+                        Platform.runLater(() -> {
+                            error__lbl.setTextFill(Paint.valueOf("RED"));
+                            error__lbl.setText("No Such Login Credential!");
+                        });
+                    }
+                    messageProcessed = true;
                 }
-            }else{
-                System.out.println("[LOG] >>> Other Receiver: " + receiver);
             }
         }
-
     }
+
 
     private void onSignUpView() {
         Model.getInstance().getViewFactory().getLoginSelectedMenuItem().set(LoginViewOptions.SIGNUP);

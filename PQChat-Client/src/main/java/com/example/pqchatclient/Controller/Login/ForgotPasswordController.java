@@ -78,21 +78,18 @@ public class ForgotPasswordController implements Initializable {
             ExecutorService service = Executors.newSingleThreadExecutor();
             service.submit(() -> Model.getInstance().getSocketManager().sendMessage(resetPassword.toString()));
             service.submit(() -> {
-                try {
-                    String checkFlag = Model.getInstance().getSocketManager().receiverMessage();
-                    JSONObject jsonObject = new JSONObject(checkFlag);
+                String checkFlag = null;
+                checkFlag = Model.getInstance().getSocketManager().retrieveMessage();
+                JSONObject jsonObject = new JSONObject(checkFlag);
 
-                    if (jsonObject.getString("prefix").equals("resetPassword")) {
-                        if (jsonObject.getString("flag").equals("success")) {
-                            Platform.runLater(() -> {
-                                emailAddress__textField.setText("Successfully Reset Password");
-                                onBackLoginWindow();
+                if (jsonObject.getString("prefix").equals("resetPassword")) {
+                    if (jsonObject.getString("flag").equals("success")) {
+                        Platform.runLater(() -> {
+                            emailAddress__textField.setText("Successfully Reset Password");
+                            onBackLoginWindow();
 
-                            });
-                        }
+                        });
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
             });
         }

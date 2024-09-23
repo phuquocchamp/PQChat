@@ -81,11 +81,7 @@ public class SignUpController implements Initializable {
 
             service.submit(() -> {
                 String checkCreateAccount = null;
-                try {
-                    checkCreateAccount = Model.getInstance().getSocketManager().receiverMessage();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                checkCreateAccount = Model.getInstance().getSocketManager().retrieveMessage();
                 JSONObject createdFlag = new JSONObject(checkCreateAccount);
                 Platform.runLater(() -> {
                     if (createdFlag.getString("flag").equals("success")) {

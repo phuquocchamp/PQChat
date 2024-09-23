@@ -42,9 +42,6 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class SingleChatController implements Initializable {
     public Label senderName__lbl;
@@ -59,11 +56,24 @@ public class SingleChatController implements Initializable {
     public Button emojiSend__btn;
 
     public VBox messageBox__vBox;
-    public Button download__btn;
+    public static Button download__btn;
     String currentUserID = Model.getInstance().getCurrentUser().getId().get();
 
-    private String targetUserID;
-    private Map<String, VBox> messageBoxMap = new HashMap<>();
+    private static String targetUserID;
+    private static final Map<String, VBox> messageBoxMap = new HashMap<>();
+
+    private static SingleChatController instance;
+
+    public SingleChatController() {
+        // Constructor
+    }
+
+    public static SingleChatController getInstance() {
+        if (instance == null) {
+            instance = new SingleChatController();
+        }
+        return instance;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,7 +100,6 @@ public class SingleChatController implements Initializable {
                 targetBox.setPadding(new Insets(10, 0, 0, 10));
                 messageContainer__scrollPane.setContent(targetBox);
 
-                serverResponse();
                 // Sending message
                 sendMessage__btn.setOnAction(event -> onSendingMessage());
                 fileSend__btn.setOnAction(event -> onSendingFile());
@@ -123,14 +132,16 @@ public class SingleChatController implements Initializable {
 
             System.out.println("[LOG] >>> send to: " + message.getString("receiver") + message.toString());
             Model.getInstance().getSocketManager().sendMessage(message.toString());
-            Platform.runLater(() -> generateMessageBox(enterMessage, timeCreated, "CENTER_RIGHT"));
+            Platform.runLater(() -> {
+                generateMessageBox(enterMessage, timeCreated, "CENTER_RIGHT");
+                enterMessage__TextArea.clear();
+            });
         }
     }
 
     private void onSendingFile() {
 
         Stage stage = (Stage) sendMessage__btn.getScene().getWindow();
-
 
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
@@ -154,6 +165,7 @@ public class SingleChatController implements Initializable {
                 fileMessage.put("prefix", "fileTransfer");
                 fileMessage.put("sender", currentUserID);
                 fileMessage.put("receiver", targetClientID);
+                fileMessage.put("fileName", fileName);
                 fileMessage.put("data", encodedString);
                 fileMessage.put("timeCreated", timeCreated);
                 System.out.println("[LOG] >>> send to: " + fileMessage.getString("receiver"));
@@ -213,7 +225,6 @@ public class SingleChatController implements Initializable {
         byte[] fileData = new byte[(int) selectedImage.length()];
         fileInputStream.read(fileData);
         fileInputStream.close();
-        // Lấy đuôi file
         String filePath = selectedImage.getAbsolutePath();
         Path path = Paths.get(filePath);
         String fileExtension = FilenameUtils.getExtension(path.getFileName().toString());
@@ -283,10 +294,19 @@ public class SingleChatController implements Initializable {
 
         TextFlow timeCreated_tf = new TextFlow(timeText);
         timeCreated_tf.setPadding(new Insets(15, 0, 0, 15));
-
+        if(align.equals("CENTER_RIGHT")){
+            timeCreated_tf.setPadding(new Insets(15, 15, 0, 0));
+            container.getChildren().addAll(timeCreated_tf, imageView);
+        }else{
+            timeCreated_tf.setPadding(new Insets(15, 0, 0, 15));
+            container.getChildren().addAll(imageView, timeCreated_tf);
+        }
 //        container.getChildren().addAll(download__btn, imageView, timeCreated_tf);
-        container.getChildren().addAll(imageView, timeCreated_tf);
-        messageBoxMap.get(targetUserID).getChildren().addAll(container);
+
+        Platform.runLater(() -> {
+            messageBoxMap.get(targetUserID).getChildren().addAll(container);
+        });
+
 
     }
 
@@ -298,10 +318,10 @@ public class SingleChatController implements Initializable {
         FontIcon dl__icon = new FontIcon("fltfal-arrow-download-16");
         dl__icon.setIconSize(15);
         dl__icon.setIconColor(Color.DARKGRAY);
-        download__btn.setGraphic(dl__icon);
-        download__btn.setStyle("-fx-background-color: transparent; -fx-text-alignment: center; -fx-cursor: hand;");
-
-        download__btn.setPadding(new Insets(0, 15, 0, 0));
+//        download__btn.setGraphic(dl__icon);
+//        download__btn.setStyle("-fx-background-color: transparent; -fx-text-alignment: center; -fx-cursor: hand;");
+//
+//        download__btn.setPadding(new Insets(0, 15, 0, 0));
         // Download picture function
 
 
@@ -320,12 +340,19 @@ public class SingleChatController implements Initializable {
         timeText.setStyle("-fx-fill: gray;");
 
         TextFlow timeCreated_tf = new TextFlow(timeText);
-        timeCreated_tf.setPadding(new Insets(15, 0, 0, 15));
-
+        if(align.equals("CENTER_RIGHT")){
+            timeCreated_tf.setPadding(new Insets(15, 15, 0, 0));
+            container.getChildren().addAll(timeCreated_tf, textFlow);
+        }else{
+            timeCreated_tf.setPadding(new Insets(15, 0, 0, 15));
+            container.getChildren().addAll(textFlow, timeCreated_tf);
+        }
         textFlow.getChildren().add(text);
-        container.getChildren().addAll(download__btn, textFlow, timeCreated_tf);
-        messageBoxMap.get(targetUserID).getChildren().add(container);
-        enterMessage__TextArea.setText("");
+//        container.getChildren().addAll(download__btn, textFlow, timeCreated_tf);
+        Platform.runLater(() -> {
+            messageBoxMap.get(targetUserID).getChildren().add(container);
+        });
+
     }
 
     private String getTimeNow() {
@@ -333,110 +360,105 @@ public class SingleChatController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return localTime.format(formatter);
     }
+
     private void generateMessageBox(String enterMessage, String timeCreated, String align) {
-        Platform.runLater(() -> {
-            HBox container = new HBox();
-            container.setAlignment(Pos.valueOf(align));
-            container.setPadding(new Insets(5, 5, 5, 10));
 
-            // Text Message
-            Text text = new Text(enterMessage);
-            TextFlow textFlow = new TextFlow();
-            textFlow.setStyle(
-                    "-fx-color: rgb(239, 242, 255);" +
-                            "-fx-font-size: 16px;" +
-                            "-fx-background-color: #1B292A;" +
-                            "-fx-background-radius: 15px 15px 15px 15px");
-            textFlow.setPadding(new Insets(5, 10, 5, 10));
-            text.setFill(Color.color(0.934, 0.925, 0.996));
+        HBox container = new HBox();
+        container.setAlignment(Pos.valueOf(align));
+        container.setPadding(new Insets(5, 5, 5, 10));
 
-            Text timeText = new Text(timeCreated);
-            timeText.setStyle("-fx-fill: gray;");
-            TextFlow timeCreated_tf = new TextFlow(timeText);
+        // Text Message
+        Text text = new Text(enterMessage);
+        TextFlow textFlow = new TextFlow();
+        textFlow.setStyle(
+                "-fx-color: rgb(239, 242, 255);" +
+                        "-fx-font-size: 16px;" +
+                        "-fx-background-color: #1B292A;" +
+                        "-fx-background-radius: 15px 15px 15px 15px");
+        textFlow.setPadding(new Insets(5, 10, 5, 10));
+        text.setFill(Color.color(0.934, 0.925, 0.996));
+
+        Text timeText = new Text(timeCreated);
+        timeText.setStyle("-fx-fill: gray;");
+        TextFlow timeCreated_tf = new TextFlow(timeText);
+        textFlow.getChildren().add(text);
+        if(align.equals("CENTER_RIGHT")){
+            timeCreated_tf.setPadding(new Insets(15, 15, 0, 0));
+            container.getChildren().addAll(timeCreated_tf, textFlow);
+        }else{
             timeCreated_tf.setPadding(new Insets(15, 0, 0, 15));
-            textFlow.getChildren().add(text);
             container.getChildren().addAll(textFlow, timeCreated_tf);
-
+        }
+        Platform.runLater(() -> {
             messageBoxMap.get(Model.getInstance().getTargetUser().getId().get()).getChildren().add(container);
-            enterMessage__TextArea.setText("");
         });
 
     }
 
-    ExecutorService service = Executors.newCachedThreadPool();
-
-    private void serverResponse() {
-        service.submit(() -> {
-            while (true) {
-                try {
-                    String receiverMessage = Model.getInstance().getSocketManager().receiverMessage();
-                    if(!receiverMessage.isEmpty()){
-                        System.out.println("[LOG] >>> Receiver: " + receiverMessage);
-                        JSONObject receiver = new JSONObject(receiverMessage);
-                        switch (receiver.getString("prefix")) {
-                            case "chat" -> {
-                                String sender = receiver.getString("sender");
-                                String message = receiver.getString("message");
-                                String timeCreated = receiver.getString("timeCreated");
-                                System.out.println("[LOG] >>> receiver from: " + sender + " message: " + message);
-                                Platform.runLater(() -> generateMessageBox(message, timeCreated, "CENTER_LEFT"));
-                            }
-                            case "imageTransfer" -> {
-                                System.out.println("[LOG] >>> Received an image from server !");
-                                String fileName = receiver.getString("fileName");
-                                String sender = receiver.getString("sender");
-                                String encodedString = receiver.getString("data");
-                                String timeCreated = receiver.getString("timeCreated");
-
-                                File imageFile = new File(getClass().getResource("src/main/resources/Images/") + fileName);
-                                System.out.println("check " + imageFile);
-                                byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-                                try {
-                                    FileUtils.writeByteArrayToFile(imageFile, decodedBytes);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                Platform.runLater(() -> {
-                                    try {
-                                        download__btn = new Button();
-                                        generateImageBox(imageFile, timeCreated, "CENTER_LEFT");
-                                        saveFile(imageFile);
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
-                            }
-                            case "fileTransfer" -> {
-                                String fileName = receiver.getString("fileName");
-                                String sender = receiver.getString("sender");
-                                String encodedString = receiver.getString("data");
-                                String timeCreated = receiver.getString("timeCreated");
-
-                                File file = new File(getClass().getResource("src/main/resources/Files/") + fileName);
-                                byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-                                try {
-                                    FileUtils.writeByteArrayToFile(file, decodedBytes);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                Platform.runLater(() -> {
-                                    download__btn = new Button();
-                                    generateFileBox(fileName, timeCreated, "CENTER_LEFT");
-                                    try {
-                                        saveFile(file);
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
-                            }
-                        }
+    public void loadMessage(String serverMessage) {
+        JSONObject receiver = new JSONObject(serverMessage);
+        switch (receiver.getString("prefix")) {
+            case "chat" -> {
+                String sender = receiver.getString("sender");
+                String message = receiver.getString("message");
+                String timeCreated = receiver.getString("timeCreated");
+                System.out.println("[LOG] >>> receiver from: " + sender + " message: " + message);
+                Platform.runLater(() -> {
+                    generateMessageBox(message, timeCreated, "CENTER_LEFT");
+                    if (enterMessage__TextArea != null) {
+                        enterMessage__TextArea.clear();
                     }
-
-                } catch (Exception e) {
-                    System.out.println("[LOG] >>> Server Response Error");
-                }
+                });
             }
-        });
+            case "imageTransfer" -> {
+                System.out.println("[LOG] >>> Received an image from server !");
+                String fileName = receiver.getString("fileName");
+                String sender = receiver.getString("sender");
+                String encodedString = receiver.getString("data");
+                String timeCreated = receiver.getString("timeCreated");
+
+                File imageFile = new File(SingleChatController.class.getResource("src/main/resources/Images/") + fileName);
+                System.out.println("check " + imageFile);
+                byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+                try {
+                    FileUtils.writeByteArrayToFile(imageFile, decodedBytes);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                Platform.runLater(() -> {
+                    try {
+                        download__btn = new Button();
+                        generateImageBox(imageFile, timeCreated, "CENTER_LEFT");
+                        saveFile(imageFile);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            case "fileTransfer" -> {
+                String fileName = receiver.getString("fileName");
+                String sender = receiver.getString("sender");
+                String encodedString = receiver.getString("data");
+                String timeCreated = receiver.getString("timeCreated");
+
+                File file = new File(SingleChatController.class.getResource("src/main/resources/Files/") + fileName);
+                byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+                try {
+                    FileUtils.writeByteArrayToFile(file, decodedBytes);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                Platform.runLater(() -> {
+                    download__btn = new Button();
+                    generateFileBox(fileName, timeCreated, "CENTER_LEFT");
+                    try {
+                        saveFile(file);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+        }
     }
 }
 

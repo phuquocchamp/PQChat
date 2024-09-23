@@ -4,19 +4,18 @@ public class Model {
     private static Model model;
     private final DatabaseDriver databaseDriver;
 
-    private Model(){
+    private Model() {
         this.databaseDriver = new DatabaseDriver();
     }
 
-
-    public static synchronized Model getInstance(){
-        if(model == null){
+    public static synchronized Model getInstance() {
+        if (model == null) {
             model = new Model();
         }
         return model;
     }
 
-    public DatabaseDriver getDatabaseDriver(){
+    public DatabaseDriver getDatabaseDriver() {
         return databaseDriver;
     }
 }

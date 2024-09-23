@@ -108,7 +108,6 @@ public class ServerThread implements Runnable {
                     writer.put("flag", check ? "success" : "failed");
                     Server.serverThreadBus.messageTransfer(this.threadUUID, writer.toString());
                 }
-
                 case "logout" -> {
                     for(int i = 0; i < Server.serverThreadBus.getOnlineUsers().length(); ++i){
                         JSONObject retrieved = Server.serverThreadBus.getOnlineUsers().getJSONObject(i);
@@ -133,37 +132,4 @@ public class ServerThread implements Runnable {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
-
-    private void saveFile(String fileName) throws IOException {
-        // Nhận dữ liệu file từ client
-//        String fileName = serverReader.readLine();
-        String filePath = "C:\\Users\\phuquocchamp\\Coding\\Java\\JavaFX\\PQChat-Server\\src\\main\\resources\\Files\\" + fileName;
-        FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = serverSocket.getInputStream().read(buffer)) != -1) {
-            fileOutputStream.write(buffer, 0, bytesRead);
-        }
-
-        fileOutputStream.close();
-    }
-
-    private void transferFile(File file) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            OutputStream outputStream = serverSocket.getOutputStream();
-            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-            outputStream.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Sending file error!");
-        }
-
-    }
-
 }
