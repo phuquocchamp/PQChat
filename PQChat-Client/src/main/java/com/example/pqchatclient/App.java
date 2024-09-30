@@ -13,6 +13,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
+        stage.setTitle("KLChat Client");
         Model.getInstance().getViewFactory().showLoginWindow();
     }
 

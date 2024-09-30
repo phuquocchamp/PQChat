@@ -1,0 +1,59 @@
+/* File: ServerLog.css */
+
+/* General container styling */
+.server-log__container {
+    -fx-background-color: rgba(50, 93, 71, 0.94); /* Background màu tương tự login */
+    /*-fx-background-radius: 30px;*/
+    /*-fx-border-radius: 15px;*/
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
+}
+
+/* Header styling */
+.server-log__header {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* Text area for logs */
+.server-log__text-area {
+    -fx-background-color: #1B292A; /* Nền tối để hiển thị log */
+    -fx-text-fill: black;
+    -fx-control-inner-background: transparent; /* Nền trong suốt cho văn bản */
+    -fx-font-family: "Courier New", Courier, monospace;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-color: #CCCC99;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+/* Button styling */
+.server-log__button {
+    -fx-background-color: #CCCC99;
+    -fx-text-fill: #1E282C;
+    -fx-font-weight: bold;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.server-log__button:hover {
+    -fx-background-color: white;
+    -fx-cursor: hand;
+}
+
+/* Port field styling */
+.server-log__port-field {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-padding: 5px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+/* Scroll pane for logs */
+.server-log__scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
